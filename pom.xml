@@ -91,9 +91,9 @@
             <id>test</id>
             <properties>
                 <db.driver>org.postgresql.Driver</db.driver>
-                <db.url>jdbc:postgresql://localhost:5432/test_</db.url>
+                <db.url>jdbc:postgresql://localhost:5431/test_</db.url>
                 <db.username>postgres</db.username>
-                <db.password>9115</db.password>
+                <db.password>1234</db.password>
                 <db.dir>${basedir}/src/test/resources/db/</db.dir>
             </properties>
         </profile>
@@ -121,7 +121,7 @@
                 <configuration>
                     <changeLogFile>${db.dir}master.xml</changeLogFile>
                     <driver>${db.driver}</driver>
-                    <url>${db.url}carprice_spring_boot</url>
+                    <url>${db.url}springboot</url>
                     <username>${db.username}</username>
                     <password>${db.password}</password>
                 </configuration>

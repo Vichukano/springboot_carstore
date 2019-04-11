@@ -23,4 +23,8 @@ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         <comment>table for cars</comment>
         <sqlFile path="scripts/004.sql" relativeToChangelogFile="true"/>
     </changeSet>
+    <changeSet id="005" author="vichukano">
+        <comment>table for cars</comment>
+        <sqlFile path="scripts/005.sql" relativeToChangelogFile="true"/>
+    </changeSet>
 </databaseChangeLog>

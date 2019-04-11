@@ -9,9 +9,6 @@ public interface Action {
         ALL,
         IMAGE,
         LAST,
-        RELEVANT,
-        BODY,
-        ENGINE,
-        TRANSMISSION
+        RELEVANT
     }
 }
