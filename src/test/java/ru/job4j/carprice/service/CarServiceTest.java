@@ -12,6 +12,7 @@ import ru.job4j.carprice.model.Image;
 import java.util.List;
 
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -163,5 +164,11 @@ public class CarServiceTest {
         List<Car> cars = this.service.findCarByPart("findCarByTransmission", "robot");
         assertThat(cars.size(), is(1));
         assertThat(cars.get(0).getTransmission().getType(), is("robot"));
+    }
+
+    @Test
+    public void whenFindCarByUnknownPartThenReturnNull() {
+        List<Car> cars = this.service.findCarByPart("unknown", "unknown");
+        assertNull(cars);
     }
 }

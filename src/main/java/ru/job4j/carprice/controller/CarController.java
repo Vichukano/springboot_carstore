@@ -110,7 +110,7 @@ public class CarController {
         HttpSession session = req.getSession();
         Image image = null;
         Car car = null;
-        if (!file.isEmpty()) {
+        if (file != null && !file.isEmpty()) {
             byte[] buffer = file.getBytes();
             String path = this.path
                     + random.nextInt(1000)

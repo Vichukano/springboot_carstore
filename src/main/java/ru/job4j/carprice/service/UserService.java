@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.job4j.carprice.model.User;
 import ru.job4j.carprice.persistence.repository.UserRepository;
 
@@ -33,6 +34,7 @@ public class UserService {
         this.repository = repository;
     }
 
+    @Transactional
     public void add(User user) {
         this.repository.save(user);
     }

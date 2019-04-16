@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.job4j.carprice.model.Car;
 import ru.job4j.carprice.persistence.repository.CarRepository;
 
@@ -28,16 +29,19 @@ public class CarService {
         this.repository = repository;
     }
 
+    @Transactional
     public void add(Car car) {
         this.repository.save(car);
         logger.debug("Added car: {}", car.toString());
     }
 
+    @Transactional
     public void delete(Car car) {
         this.repository.delete(car);
         logger.debug("Car with id={} deleted.", car.getId());
     }
 
+    @Transactional
     public void update(Car car) {
         this.repository.save(car);
         logger.debug("Car with id={} updated.", car.getId());
