@@ -52,16 +52,15 @@ public class CarControllerTest {
     @Test
     @WithMockUser(username = "test", password = "test")
     public void whenGetAllCarsThenReturnListOfCarsInJson() throws Exception {
+        List<Car> cars = Arrays.asList(
+                new Car("test1", 1D),
+                new Car("test2", 2D),
+                new Car("test3", 3D)
+        );
         when(this.principal.getName()).thenReturn("test");
         when(this.userService.findByLogin("test")).thenReturn(new User(1L));
         when(this.carService.init()).thenReturn(this.carService);
-        when(this.carService.action(Action.Type.ALL)).thenReturn(
-                Arrays.asList(
-                        new Car("test1", 1D),
-                        new Car("test2", 2D),
-                        new Car("test3", 3D)
-                )
-        );
+        when(this.carService.action(Action.Type.ALL)).thenReturn(cars);
         this.mvc.perform(
                 get("/api/cars")
                         .param("action", "ALL")
@@ -69,16 +68,7 @@ public class CarControllerTest {
         ).andExpect(
                 status().isOk()
         ).andExpect(
-                content().string(
-                        "[{\"id\":0,\"name\":\"test1\",\"price\":1.0,\"color\":null,\"mileage\""
-                                + ":0,\"sold\":false,\"description\":null,\"createDate\":null,\"body\":null,\"engine\":null,"
-                                + "\"transmission\":null,\"image\":null,\"user\":null},{\"id\":0,\"name\":\"test2\",\"price\""
-                                + ":2.0,\"color\":null,\"mileage\":0,\"sold\":false,\"description\":null,\"createDate\":null,\""
-                                + "body\":null,\"engine\":null,\"transmission\":null,\"image\":null,\"user\":null},{\"id\":0,\""
-                                + "name\":\"test3\",\"price\":3.0,\"color\":null,\"mileage\":0,\"sold\":false,\"description\""
-                                + ":null,\"createDate\":null,\"body\":null,\"engine\":null,\"transmission\":null,\"image\":null,"
-                                + "\"user\":null}]"
-                )
+                content().string(this.mapper.writeValueAsString(cars))
         );
         verify(this.carService, times(1)).init();
         verify(this.carService, times(1)).action(Action.Type.ALL);
@@ -123,13 +113,7 @@ public class CarControllerTest {
         ).andExpect(
                 status().isOk()
         ).andExpect(
-                content().string(
-                        "[{\"id\":0,\"name\":\"ford\",\"price\":1.0,\"color\":null,\"mileage\""
-                                + ":0,\"sold\":false,\"description\":null,\"createDate\":null,\"body\":null,\"engine\":null,\""
-                                + "transmission\":null,\"image\":null,\"user\":null},{\"id\":0,\"name\":\"toyota\",\"price\":2.0,\""
-                                + "color\":null,\"mileage\":0,\"sold\":false,\"description\":null,\"createDate\":null,"
-                                + "\"body\":null,\"engine\":null,\"transmission\":null,\"image\":null,\"user\":null}]"
-                )
+                content().string(this.mapper.writeValueAsString(cars))
         );
         verify(this.carService, times(1)).init();
         verify(this.carService, times(1)).action(Action.Type.RELEVANT);
@@ -138,16 +122,15 @@ public class CarControllerTest {
     @Test
     @WithMockUser(username = "test", password = "test")
     public void whenGetAllCarsForLastDayThenReturnCarsInJson() throws Exception {
+        List<Car> cars = Arrays.asList(
+                new Car("test1", 1D),
+                new Car("test2", 2D),
+                new Car("test3", 3D)
+        );
         when(this.principal.getName()).thenReturn("test");
         when(this.userService.findByLogin("test")).thenReturn(new User(1L));
         when(this.carService.init()).thenReturn(this.carService);
-        when(this.carService.action(Action.Type.LAST)).thenReturn(
-                Arrays.asList(
-                        new Car("test1", 1D),
-                        new Car("test2", 2D),
-                        new Car("test3", 3D)
-                )
-        );
+        when(this.carService.action(Action.Type.LAST)).thenReturn(cars);
         this.mvc.perform(
                 get("/api/cars")
                         .param("action", "LAST")
@@ -155,16 +138,7 @@ public class CarControllerTest {
         ).andExpect(
                 status().isOk()
         ).andExpect(
-                content().string(
-                        "[{\"id\":0,\"name\":\"test1\",\"price\":1.0,\"color\":null,\"mileage\""
-                                + ":0,\"sold\":false,\"description\":null,\"createDate\":null,\"body\":null,\"engine\":null,"
-                                + "\"transmission\":null,\"image\":null,\"user\":null},{\"id\":0,\"name\":\"test2\",\"price\""
-                                + ":2.0,\"color\":null,\"mileage\":0,\"sold\":false,\"description\":null,\"createDate\":null,\""
-                                + "body\":null,\"engine\":null,\"transmission\":null,\"image\":null,\"user\":null},{\"id\":0,\""
-                                + "name\":\"test3\",\"price\":3.0,\"color\":null,\"mileage\":0,\"sold\":false,\"description\""
-                                + ":null,\"createDate\":null,\"body\":null,\"engine\":null,\"transmission\":null,\"image\":null,"
-                                + "\"user\":null}]"
-                )
+                content().string(this.mapper.writeValueAsString(cars))
         );
         verify(this.carService, times(1)).init();
         verify(this.carService, times(1)).action(Action.Type.LAST);
@@ -173,12 +147,11 @@ public class CarControllerTest {
     @Test
     @WithMockUser(username = "test", password = "test")
     public void whenGetAllCarsAndFindByPartThenReturnListOfCars() throws Exception {
+        List<Car> cars = Arrays.asList(new Car("test", 1D));
         when(this.principal.getName()).thenReturn("test");
         when(this.userService.findByLogin("test")).thenReturn(new User(1L));
         when(this.carService.init()).thenReturn(this.carService);
-        when(this.carService.findCarByPart("test", "test")).thenReturn(
-                Arrays.asList(new Car("test", 1D))
-        );
+        when(this.carService.findCarByPart("test", "test")).thenReturn(cars);
         this.mvc.perform(
                 get("/api/cars")
                         .param("query", "test")
@@ -187,11 +160,7 @@ public class CarControllerTest {
         ).andExpect(
                 status().isOk()
         ).andExpect(
-                content().string(
-                        "[{\"id\":0,\"name\":\"test\",\"price\":1.0,\"color\":null,\"mileage\":0,"
-                                + "\"sold\":false,\"description\":null,\"createDate\":null,\"body\":null,\"engine\":null,"
-                                + "\"transmission\":null,\"image\":null,\"user\":null}]"
-                )
+                content().string(this.mapper.writeValueAsString(cars))
         );
         verify(this.carService, times(1)).findCarByPart("test", "test");
         verify(this.carService, times(0)).init();
